@@ -42,6 +42,67 @@ var casefiles = []*casefile{
 	},
 }
 
+type financialEntry struct {
+	ID        graphql.ID
+	Name      string
+}
+
+
+var financialEntries = []*financialEntry{
+	{
+		ID:        "1000",
+		Name:      "Bankruptcy",
+	},
+	{
+		ID:        "1001",
+		Name:      "Outstanding Private Loan",
+	},
+	{
+		ID:        "1002",
+		Name:      "Paid Private Loan",
+	},
+	{
+		ID:        "1003",
+		Name:      "Student Loan",
+	},
+	{
+		ID:        "1004",
+		Name:      "Mortgage",
+	},
+}
+
+var financialEntryData = make(map[graphql.ID]*financialEntry)
+
+func init() {
+	for _, h := range financialEntries {
+		financialEntryData[h.ID] = h
+	}
+}
+
+type sf86section struct {
+	ID              graphql.ID
+	Name            string
+}
+
+var sf86sections = []*sf86section{
+	{
+		ID:              "2000",
+		Name:            "Employment History",
+	},
+	{
+		ID:              "2001",
+		Name:            "Credit History",
+	},
+}
+
+var sf86sectionData = make(map[graphql.ID]*sf86section)
+
+func init() {
+	for _, d := range sf86sections {
+		sf86sectionData[d.ID] = d
+	}
+}
+
 type casefile struct {
 	ID          graphql.ID // scalar by default
 	Number      string
@@ -100,6 +161,73 @@ func (r *caseResolver) Status() *string {
 
 func (r *caseResolver) FlagCount() string {
 	return r.c.FlagCount
+}
+
+func (r *Resolver) CasefileEntry(args struct{ ID graphql.ID }) *casefileEntryResolver {
+	if h := financialEntryData[args.ID]; h != nil {
+		return &casefileEntryResolver{&financialEntryResolver{h}}
+	}
+	if d := sf86sectionData[args.ID]; d != nil {
+		return &casefileEntryResolver{&sf86sectionResolver{d}}
+	}
+	return nil
+}
+
+func (r *Resolver) FinancialEntry(args struct{ ID graphql.ID }) *financialEntryResolver {
+	if h := financialEntryData[args.ID]; h != nil {
+		return &financialEntryResolver{h}
+	}
+	return nil
+}
+
+func (r *Resolver) SF86section(args struct{ ID graphql.ID }) *sf86sectionResolver {
+	if d := sf86sectionData[args.ID]; d != nil {
+		return &sf86sectionResolver{d}
+	}
+	return nil
+}
+
+type casefileEntry interface {
+	ID() graphql.ID
+	Name() string
+}
+
+type casefileEntryResolver struct {
+	casefileEntry
+}
+
+func (r *casefileEntryResolver) ToFinancialEntry() (*financialEntryResolver, bool) {
+	c, ok := r.casefileEntry.(*financialEntryResolver)
+	return c, ok
+}
+
+func (r *casefileEntryResolver) ToSF86section() (*sf86sectionResolver, bool) {
+	c, ok := r.casefileEntry.(*sf86sectionResolver)
+	return c, ok
+}
+
+type financialEntryResolver struct {
+	h *financialEntry
+}
+
+func (r *financialEntryResolver) ID() graphql.ID {
+	return r.h.ID
+}
+
+func (r *financialEntryResolver) Name() string {
+	return r.h.Name
+}
+
+type sf86sectionResolver struct {
+	d *sf86section
+}
+
+func (r *sf86sectionResolver) ID() graphql.ID {
+	return r.d.ID
+}
+
+func (r *sf86sectionResolver) Name() string {
+	return r.d.Name
 }
 
 var schema *graphql.Schema

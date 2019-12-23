@@ -3,6 +3,7 @@ schema {
 }
 type Query {
   casefile(id: ID!): Casefile
+  casefileEntry(id: ID!): CasefileEntry
 }
 
 type Casefile {
@@ -12,4 +13,28 @@ type Casefile {
   closedAt: String
   status: String
   flagCount: String!
+}
+
+# A casefileEntry from the casefile
+interface CasefileEntry {
+  # The ID of the casefileEntry
+  id: ID!
+  # The name of the casefileEntry
+  name: String!
+}
+
+# A financialEntry from the casefile
+type FinancialEntry implements CasefileEntry {
+  # The ID of the financialEntry
+  id: ID!
+  # Name of the financialEntry
+  name: String!
+}
+
+# An SF86section in the casefile
+type SF86section implements CasefileEntry {
+  # The ID of the sf86section
+  id: ID!
+  # Name of the sf86section
+  name: String!
 }
