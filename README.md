@@ -1,6 +1,5 @@
-`go run main.go`
-
-At locahost:8080
+- `go run main.go`
+- at locahost:8080
 
 Query casefile looks like:
 
@@ -34,8 +33,7 @@ Response:
 }
 ```
 
-possible IDs
-1000, 2000, 3000, 4000
+possible IDs: 1000, 2000, 3000, 4000
 
 Query casefileEntry looks like:
 
@@ -63,9 +61,7 @@ Response:
 }
 ```
 
-possible IDs
-1000, 1001, 1002, 1003, 1004 (financial entries)
-2000, 2001 (SF86 sections)
+possible IDs: 1000, 1001, 1002, 1003, 1004 (financial entries); 2000, 2001 (SF86 sections)
 
 Query financialEntry looks like:
 
@@ -77,8 +73,7 @@ Query financialEntry looks like:
 }
 ```
 
-possible IDs
-1000, 1001, 1002, 1003, 1004
+possible IDs: 1000, 1001, 1002, 1003, 1004
 
 Query sf86Section looks like:
 
@@ -89,6 +84,8 @@ Query sf86Section looks like:
   }
 }
 ```
+
+possible IDs: 2000, 2001
 
 Also, variants with and without fields. For example:
 
