@@ -1,0 +1,15 @@
+schema {
+  query: Query
+}
+type Query {
+  casefile(id: ID!): Casefile
+}
+
+type Casefile {
+  id: ID!
+  number: String!
+  initiatedAt: String!
+  closedAt: String
+  status: String
+  flagCount: String!
+}
