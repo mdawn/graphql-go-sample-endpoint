@@ -4,6 +4,8 @@ schema {
 type Query {
   casefile(id: ID!): Casefile
   casefileEntry(id: ID!): CasefileEntry
+  financialEntry(id: ID!): FinancialEntry
+  sf86section(id: ID!): SF86section
 }
 
 type Casefile {

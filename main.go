@@ -79,12 +79,12 @@ func init() {
 	}
 }
 
-type sf86section struct {
+type sf86Section struct {
 	ID              graphql.ID
 	Name            string
 }
 
-var sf86sections = []*sf86section{
+var sf86Sections = []*sf86Section{
 	{
 		ID:              "2000",
 		Name:            "Employment History",
@@ -95,11 +95,11 @@ var sf86sections = []*sf86section{
 	},
 }
 
-var sf86sectionData = make(map[graphql.ID]*sf86section)
+var sf86SectionData = make(map[graphql.ID]*sf86Section)
 
 func init() {
-	for _, d := range sf86sections {
-		sf86sectionData[d.ID] = d
+	for _, d := range sf86Sections {
+		sf86SectionData[d.ID] = d
 	}
 }
 
@@ -167,8 +167,8 @@ func (r *Resolver) CasefileEntry(args struct{ ID graphql.ID }) *casefileEntryRes
 	if h := financialEntryData[args.ID]; h != nil {
 		return &casefileEntryResolver{&financialEntryResolver{h}}
 	}
-	if d := sf86sectionData[args.ID]; d != nil {
-		return &casefileEntryResolver{&sf86sectionResolver{d}}
+	if d := sf86SectionData[args.ID]; d != nil {
+		return &casefileEntryResolver{&sf86SectionResolver{d}}
 	}
 	return nil
 }
@@ -180,9 +180,9 @@ func (r *Resolver) FinancialEntry(args struct{ ID graphql.ID }) *financialEntryR
 	return nil
 }
 
-func (r *Resolver) SF86section(args struct{ ID graphql.ID }) *sf86sectionResolver {
-	if d := sf86sectionData[args.ID]; d != nil {
-		return &sf86sectionResolver{d}
+func (r *Resolver) SF86section(args struct{ ID graphql.ID }) *sf86SectionResolver {
+	if d := sf86SectionData[args.ID]; d != nil {
+		return &sf86SectionResolver{d}
 	}
 	return nil
 }
@@ -201,8 +201,8 @@ func (r *casefileEntryResolver) ToFinancialEntry() (*financialEntryResolver, boo
 	return c, ok
 }
 
-func (r *casefileEntryResolver) ToSF86section() (*sf86sectionResolver, bool) {
-	c, ok := r.casefileEntry.(*sf86sectionResolver)
+func (r *casefileEntryResolver) ToSF86section() (*sf86SectionResolver, bool) {
+	c, ok := r.casefileEntry.(*sf86SectionResolver)
 	return c, ok
 }
 
@@ -218,15 +218,15 @@ func (r *financialEntryResolver) Name() string {
 	return r.h.Name
 }
 
-type sf86sectionResolver struct {
-	d *sf86section
+type sf86SectionResolver struct {
+	d *sf86Section
 }
 
-func (r *sf86sectionResolver) ID() graphql.ID {
+func (r *sf86SectionResolver) ID() graphql.ID {
 	return r.d.ID
 }
 
-func (r *sf86sectionResolver) Name() string {
+func (r *sf86SectionResolver) Name() string {
 	return r.d.Name
 }
 

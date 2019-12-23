@@ -1,5 +1,6 @@
-At locahost:8080
 `go run main.go`
+
+At locahost:8080
 
 Query casefile looks like:
 
@@ -65,6 +66,29 @@ Response:
 possible IDs
 1000, 1001, 1002, 1003, 1004 (financial entries)
 2000, 2001 (SF86 sections)
+
+Query financialEntry looks like:
+
+```
+{
+  financialEntry (id: 1001){
+    name
+  }
+}
+```
+
+possible IDs
+1000, 1001, 1002, 1003, 1004
+
+Query sf86Section looks like:
+
+```
+{
+  sf86Section (id: 2001){
+    name
+  }
+}
+```
 
 Also, variants with and without fields. For example:
 
