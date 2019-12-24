@@ -67,8 +67,9 @@ Query financialEntry looks like:
 
 ```
 {
-  financialEntry (id: 1001){
+  financialEntry(id: 1001) {
     name
+    date
   }
 }
 ```
@@ -79,8 +80,9 @@ Query sf86Section looks like:
 
 ```
 {
-  sf86Section (id: 2001){
+  sf86section(id: 2001) {
     name
+    date
   }
 }
 ```

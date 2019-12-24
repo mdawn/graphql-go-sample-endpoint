@@ -23,6 +23,7 @@ interface CasefileEntry {
   id: ID!
   # The name of the casefileEntry
   name: String!
+  date: String!
 }
 
 # A financialEntry from the casefile
@@ -31,6 +32,7 @@ type FinancialEntry implements CasefileEntry {
   id: ID!
   # Name of the financialEntry
   name: String!
+  date: String!
 }
 
 # An SF86section in the casefile
@@ -39,4 +41,5 @@ type SF86section implements CasefileEntry {
   id: ID!
   # Name of the sf86section
   name: String!
+  date: String!
 }

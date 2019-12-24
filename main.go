@@ -43,31 +43,36 @@ var casefiles = []*casefile{
 }
 
 type financialEntry struct {
-	ID        graphql.ID
-	Name      string
+	ID   graphql.ID
+	Name string
+	Date string
 }
-
 
 var financialEntries = []*financialEntry{
 	{
-		ID:        "1000",
-		Name:      "Bankruptcy",
+		ID:   "1000",
+		Name: "Bankruptcy",
+		Date: "9999-12-31",
 	},
 	{
-		ID:        "1001",
-		Name:      "Outstanding Private Loan",
+		ID:   "1001",
+		Name: "Outstanding Private Loan",
+		Date: "9999-12-31",
 	},
 	{
-		ID:        "1002",
-		Name:      "Paid Private Loan",
+		ID:   "1002",
+		Name: "Paid Private Loan",
+		Date: "9999-12-31",
 	},
 	{
-		ID:        "1003",
-		Name:      "Student Loan",
+		ID:   "1003",
+		Name: "Student Loan",
+		Date: "9999-12-31",
 	},
 	{
-		ID:        "1004",
-		Name:      "Mortgage",
+		ID:   "1004",
+		Name: "Mortgage",
+		Date: "9999-12-31",
 	},
 }
 
@@ -80,18 +85,21 @@ func init() {
 }
 
 type sf86Section struct {
-	ID              graphql.ID
-	Name            string
+	ID   graphql.ID
+	Name string
+	Date string
 }
 
 var sf86Sections = []*sf86Section{
 	{
-		ID:              "2000",
-		Name:            "Employment History",
+		ID:   "2000",
+		Name: "Employment History",
+		Date: "9999-12-31",
 	},
 	{
-		ID:              "2001",
-		Name:            "Credit History",
+		ID:   "2001",
+		Name: "Credit History",
+		Date: "9999-12-31",
 	},
 }
 
@@ -190,6 +198,7 @@ func (r *Resolver) SF86section(args struct{ ID graphql.ID }) *sf86SectionResolve
 type casefileEntry interface {
 	ID() graphql.ID
 	Name() string
+	Date() string
 }
 
 type casefileEntryResolver struct {
@@ -218,6 +227,10 @@ func (r *financialEntryResolver) Name() string {
 	return r.h.Name
 }
 
+func (r *financialEntryResolver) Date() string {
+	return r.h.Date
+}
+
 type sf86SectionResolver struct {
 	d *sf86Section
 }
@@ -228,6 +241,10 @@ func (r *sf86SectionResolver) ID() graphql.ID {
 
 func (r *sf86SectionResolver) Name() string {
 	return r.d.Name
+}
+
+func (r *sf86SectionResolver) Date() string {
+	return r.d.Date
 }
 
 var schema *graphql.Schema
