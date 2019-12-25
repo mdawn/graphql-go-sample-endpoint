@@ -198,7 +198,7 @@ func (r *Resolver) SF86section(args struct{ ID graphql.ID }) *sf86SectionResolve
 type casefileEntry interface {
 	ID() graphql.ID
 	Name() string
-	Date() string
+	Date() *string
 }
 
 type casefileEntryResolver struct {
@@ -227,8 +227,12 @@ func (r *financialEntryResolver) Name() string {
 	return r.h.Name
 }
 
-func (r *financialEntryResolver) Date() string {
-	return r.h.Date
+func (r *financialEntryResolver) Date() *string {
+	if r.h.Date == "" {
+		return nil
+	}
+	k := string(r.h.Date)
+	return &k
 }
 
 type sf86SectionResolver struct {
@@ -243,8 +247,12 @@ func (r *sf86SectionResolver) Name() string {
 	return r.d.Name
 }
 
-func (r *sf86SectionResolver) Date() string {
-	return r.d.Date
+func (r *sf86SectionResolver) Date() *string {
+	if r.d.Date == "" {
+		return nil
+	}
+	k := string(r.d.Date)
+	return &k
 }
 
 var schema *graphql.Schema
